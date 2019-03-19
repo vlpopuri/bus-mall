@@ -9,3 +9,13 @@ img{
   height: 200px;
   
 }
+
+#chart-container{
+  height: 300px;
+  width:  300px;
+  margin: 150px 350px 150px 350px;
+  border: ipx solid black;
+  background-color: rgb(49, 29, 29)
+
+
+}

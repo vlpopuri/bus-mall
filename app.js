@@ -45,7 +45,7 @@ var rightImage = document.getElementById('right-image');
 
 //Intialize the page
 
-var all_ProductImagesContainerSectionEl = document.getElementById('all_product_Images');
+var allProductImagesContainerSectionEl = document.getElementById('all_product_Images');
 
 // var leftDiv = document.getElementById('left-div');
 // console.log(leftDiv);
@@ -71,19 +71,61 @@ var BusCatalogImage = function(src, name){
 //    - change the DOM
 //    - Store the index of the last image we put on the page
 
-function handleClickOnLeftImage(event){
-  console.log('clicked on left image');
+function handleClickOnAnyImage(event){
+  if(event.target.tagName !== 'IMG'){
+    return;
+  }
+  console.log('clicked on A image');
   //increment total clicks
   likeCounter++;
-  // increment left Image clicks
-  leftImageThatIsOnThePage.clicks++;
+  if(event.target.id === 'left_product_img'){
+    leftImageThatIsOnThePage.clicks++;
+  }
+  if(event.target.id === 'center_product_img'){
+    centerImageThatIsOnThePage.clicks++;
+  }
+  if(event.target.id === 'right_product_img'){
+    rightImageThatIsOnThePage.clicks++;
+  }
+
+  var tempPickedProducts = [];
+  //TODO: refactor to be repeatable
+  do {// we are selecting a previous product
+    // pick a new 3 images
+    var leftImageIndex = Math.floor(Math.random() * allImages.length);
+
+  } while (
+    previouslyPickedImages.includes(allImages[leftImageIndex])||
+    tempPickedProducts.includes(allImages[leftImageIndex])
+
+  );
+  tempPickedProducts.push(allImages[leftImageIndex]);
+  do {// we are selecting a previous image
+    // pick a new 3 images,
+    var centerImageIndex = Math.floor(Math.random() * allImages.length);
+
+  } while (
+    previouslyPickedImages.includes(allImages[centerImageIndex]) ||
+    tempPickedProducts.includes(allImages[centerImageIndex])
+
+  );
+  tempPickedProducts.push(allImages[centerImageIndex]);
+
+  do {
+
+    var rightImageIndex = Math.floor(Math.random() * allImages.length);
+
+  } while (
+
+    previouslyPickedImages.includes(allImages[rightImageIndex])||
+    tempPickedProducts.includes(allImages[rightImageIndex])
+
+  );
+  tempPickedProducts.push(allImages[rightImageIndex]);
 
   //selecting 3 random images
   //TODO: make sure you dont repeat
-  var leftImageIndex = Math.floor(Math.random() * allImages.length);
-  var centerImageIndex = Math.floor( Math.random() * allImages.length );
-  var rightImageIndex = Math.floor(Math.random() * allImages.length);
-  // pick a new 3 images,
+
 
   leftImageThatIsOnThePage = allImages[leftImageIndex];
   centerImageThatIsOnThePage = allImages[centerImageIndex];
@@ -96,80 +138,18 @@ function handleClickOnLeftImage(event){
 
 
   // stop after 2 clicks
-  if(likeCounter > 5){
+  if(likeCounter > 24){
     // stop listening for clicks on the left, center and right images
-    leftDiv.removeEventListener('click', handleClickOnLeftImage);
-    centerDiv.removeEventListener('click', handleClickOnCenterImage);
-    rightDiv.removeEventListener('click', handleClickOnRightImage);
+    allProductImagesContainerSectionEl.removeEventListener('click', handleClickOnAnyImage);
+    // centerDiv.removeEventListener('click', handleClickOnCenterImage);
+    // rightDiv.removeEventListener('click', handleClickOnRightImage);
 
+    makeAProductChart();
   }
 }
 
-function handleClickOnCenterImage(event) {
-  console.log('clicked on center image');
-  //increment total clicks
-  likeCounter++;
-  // increment center image clicks
-  centerImageThatIsOnThePage.clicks++;
+allProductImagesContainerSectionEl.addEventListener('click', handleClickOnAnyImage);
 
-  // // pick a new 3 images,
-  var leftImageIndex = Math.floor(Math.random() * allImages.length);
-  var centerImageIndex = Math.floor(Math.random() * allImages.length);
-  var rightImageIndex = Math.floor(Math.random() * allImages.length);
-
-  leftImageThatIsOnThePage = allImages[leftImageIndex];
-  centerImageThatIsOnThePage = allImages[centerImageIndex];
-  rightImageThatIsOnThePage = allImages[rightImageIndex];
-
-  //and put them on the page
-
-  leftImage.src = leftImageThatIsOnThePage.imagesrc;
-  centerImage.src = centerImageThatIsOnThePage.imagesrc;
-  rightImage.src = rightImageThatIsOnThePage.imagesrc;
-
-  // stop after 2 clicks
-  if (likeCounter > 5) {
-    // stop listening for clicks on the left,center and right images
-    leftDiv.removeEventListener('click', handleClickOnLeftImage);
-    centerDiv.removeEventListener('click', handleClickOnCenterImage);
-    rightDiv.removeEventListener('click', handleClickOnRightImage);
-  }
-}
-
-function handleClickOnRightImage(event) {
-  console.log('clicked on right image');
-  //increment total clicks
-
-  likeCounter++;
-  // increment right goat's clicks
-  rightImageThatIsOnThePage.clicks++;
-
-  var leftImageIndex = Math.floor(Math.random() * allImages.length);
-  var centerImageIndex = Math.floor( Math.random() * allImages.length );
-  var rightImageIndex = Math.floor(Math.random() * allImages.length);
-
-  leftImageThatIsOnThePage = allImages[leftImageIndex];
-  centerImageThatIsOnThePage = allImages[centerImageIndex];
-  rightImageThatIsOnThePage = allImages[rightImageIndex];
-
-  //and put them on the page
-  leftImage.src = leftImageThatIsOnThePage.imagesrc;
-  centerImage.src = centerImageThatIsOnThePage.imagesrc;
-  rightImage.src = rightImageThatIsOnThePage.imagesrc;
-
-  if (likeCounter > 5) {
-    // stop listening for clicks on the left,center and right images
-    leftDiv.removeEventListener('click', handleClickOnLeftImage);
-    centerDiv.removeEventListener('click', handleClickOnCenterImage);
-    rightDiv.removeEventListener('click', handleClickOnRightImage);
-
-  }
-}
-
-
-leftDiv.addEventListener('click', handleClickOnLeftImage);
-centerDiv.addEventListener('click', handleClickOnCenterImage);
-rightDiv.addEventListener('click', handleClickOnRightImage);
 
 new BusCatalogImage('./images/bag.jpg', 'Travel Bag');
 new BusCatalogImage('./images/banana.jpg', 'Banana');
@@ -177,18 +157,18 @@ new BusCatalogImage('./images/bathroom.jpg', 'Bathroom');
 new BusCatalogImage('./images/boots.jpg', 'Boots');
 new BusCatalogImage('./images/breakfast.jpg', 'Breakfast');
 new BusCatalogImage('./images/bubblegum.jpg', 'Bubbegum');
-// new BusCatalogImage('./images/chair.jpg', 'Chair');
-// new BusCatalogImage('./images/cthulhu.jpg', 'Cthulhu');
-// new BusCatalogImage('./images/dog-duck.jpg', 'Dog-Duck');
-// new BusCatalogImage('./images/dragon.jpg', 'Dragon');
-// new BusCatalogImage('./images/pen.jpg', 'Pen');
-// new BusCatalogImage('./images/scissors.jpg', 'Scissors');
-// new BusCatalogImage('./images/shark.jpg', 'Shark');
-// new BusCatalogImage('./images/sweep.png', 'Sweep');
-// new BusCatalogImage('./images/tauntaun.jpg', 'TaunTaun');
-// new BusCatalogImage('./images/unicorn.jpg', 'Unicorn');
-// new BusCatalogImage('./images/usb.gif', 'Usb');
-// new BusCatalogImage('./images/water-can.jpg', 'Water-Can');
+new BusCatalogImage('./images/chair.jpg', 'Chair');
+new BusCatalogImage('./images/cthulhu.jpg', 'Cthulhu');
+new BusCatalogImage('./images/dog-duck.jpg', 'Dog-Duck');
+new BusCatalogImage('./images/dragon.jpg', 'Dragon');
+new BusCatalogImage('./images/pen.jpg', 'Pen');
+new BusCatalogImage('./images/scissors.jpg', 'Scissors');
+new BusCatalogImage('./images/shark.jpg', 'Shark');
+new BusCatalogImage('./images/sweep.png', 'Sweep');
+new BusCatalogImage('./images/tauntaun.jpg', 'TaunTaun');
+new BusCatalogImage('./images/unicorn.jpg', 'Unicorn');
+new BusCatalogImage('./images/usb.gif', 'Usb');
+new BusCatalogImage('./images/water-can.jpg', 'Water-Can');
 
 
 leftImageThatIsOnThePage= allImages[2];
@@ -200,48 +180,54 @@ rightImageThatIsOnThePage=allImages[0];
 //================================================================
 
 
+function makeAProductChart(){
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['Travel Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum'],
-    datasets: [{
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    animation: {
-      duration: 10000,
-      easing: 'easeInQuad'
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
+  var productNamesArray = [];
+  var productLikesArray =[];
+
+  for(var i = 0; i < allImages.length; i++){
+    var singleProductName = allImages[i].name;
+    productNamesArray.push(singleProductName);
   }
-});
+
+  for(var j = 0; j < allImages.length; j++){
+    var singleProductLikes = allImages[j].clicks;
+    productLikesArray.push(singleProductLikes);
+  }
+
+
+
+  var ctx = document.getElementById('BusCatalogChart').getContext('2d');
+
+  var productChart = new Chart(ctx, {
+  // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+      labels: productNamesArray,
+      datasets: [{
+        label: 'Product Likes',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: productLikesArray
+      }]
+    },
+
+    // Configuration options go here
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
+
 
 
 

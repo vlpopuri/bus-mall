@@ -78,13 +78,14 @@ function handleClickOnAnyImage(event){
   console.log('clicked on A image');
   //increment total clicks
   likeCounter++;
-  if(event.target.id === 'left_product_img'){
+  //debugger;
+  if(event.target.id === 'left-image'){
     leftImageThatIsOnThePage.clicks++;
   }
-  if(event.target.id === 'center_product_img'){
+  if(event.target.id === 'middle-image'){
     middleImageThatIsOnThePage.clicks++;
   }
-  if(event.target.id === 'right_product_img'){
+  if(event.target.id === 'right-image'){
     rightImageThatIsOnThePage.clicks++;
   }
 
@@ -185,16 +186,16 @@ function makeAProductChart(){
   var productNamesArray = [];
   var productLikesArray =[];
 
+
   for(var i = 0; i < allImages.length; i++){
     var singleProductName = allImages[i].name;
     productNamesArray.push(singleProductName);
   }
-
+  //debugger;
   for(var j = 0; j < allImages.length; j++){
     var singleProductLikes = allImages[j].clicks;
     productLikesArray.push(singleProductLikes);
   }
-
 
 
   var ctx = document.getElementById('BusCatalogChart').getContext('2d');
@@ -210,7 +211,7 @@ function makeAProductChart(){
         label: 'Product Likes',
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(255, 99, 132)',
-        data: productLikesArray
+        data: productLikesArray,
       }]
     },
 
@@ -226,6 +227,7 @@ function makeAProductChart(){
     }
   });
 }
+makeAProductChart();
 
 
 

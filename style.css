@@ -1,7 +1,6 @@
 div{
-  height: 200px;
-  width : 200px;
-  background: blue; 
+  
+   
   display: inline-block;
 }
 img{
@@ -11,11 +10,11 @@ img{
 }
 
 #chart-container{
-  height: 300px;
-  width:  300px;
-  margin: 150px 350px 150px 350px;
+  
+  width:  50%;
+  margin: auto;
   border: ipx solid black;
-  background-color: rgb(49, 29, 29)
+  
 
 
 }

@@ -146,30 +146,54 @@ function handleClickOnAnyImage(event){
     // rightDiv.removeEventListener('click', handleClickOnRightImage);
 
     makeAProductChart();
+
+    // Save the images data;
+    console.log('saving images to local storage');
+    var catalogImages = JSON.stringify(allImages);
+    localStorage.setItem('allImages', catalogImages);
   }
 }
 
+// ===================================
+// Initialize the Page
+// ===================================
+
 allProductImagesContainerSectionEl.addEventListener('click', handleClickOnAnyImage);
 
+// If there are no goats stored in local storage, make new goats
+if(localStorage.getItem('allImages') === null){
+  // Instantiate Image objects
+  console.log('making new Images');
+  new BusCatalogImage('./images/bag.jpg', 'Travel Bag');
+  new BusCatalogImage('./images/banana.jpg', 'Banana');
+  new BusCatalogImage('./images/bathroom.jpg', 'Bathroom');
+  new BusCatalogImage('./images/boots.jpg', 'Boots');
+  new BusCatalogImage('./images/breakfast.jpg', 'Breakfast');
+  new BusCatalogImage('./images/bubblegum.jpg', 'Bubbegum');
+  new BusCatalogImage('./images/chair.jpg', 'Chair');
+  new BusCatalogImage('./images/cthulhu.jpg', 'Cthulhu');
+  new BusCatalogImage('./images/dog-duck.jpg', 'Dog-Duck');
+  new BusCatalogImage('./images/dragon.jpg', 'Dragon');
+  new BusCatalogImage('./images/pen.jpg', 'Pen');
+  new BusCatalogImage('./images/scissors.jpg', 'Scissors');
+  new BusCatalogImage('./images/shark.jpg', 'Shark');
+  new BusCatalogImage('./images/sweep.png', 'Sweep');
+  new BusCatalogImage('./images/tauntaun.jpg', 'TaunTaun');
+  new BusCatalogImage('./images/unicorn.jpg', 'Unicorn');
+  new BusCatalogImage('./images/usb.gif', 'Usb');
+  new BusCatalogImage('./images/water-can.jpg', 'Water-Can');
+} else { // if there is something stored in local storage, retrieve it
+  console.log('retrieving images from local storage');
+  var catalogImages = localStorage.getItem('allImages');
+  allImages = JSON.parse(catalogImages);
+}
 
-new BusCatalogImage('./images/bag.jpg', 'Travel Bag');
-new BusCatalogImage('./images/banana.jpg', 'Banana');
-new BusCatalogImage('./images/bathroom.jpg', 'Bathroom');
-new BusCatalogImage('./images/boots.jpg', 'Boots');
-new BusCatalogImage('./images/breakfast.jpg', 'Breakfast');
-new BusCatalogImage('./images/bubblegum.jpg', 'Bubbegum');
-new BusCatalogImage('./images/chair.jpg', 'Chair');
-new BusCatalogImage('./images/cthulhu.jpg', 'Cthulhu');
-new BusCatalogImage('./images/dog-duck.jpg', 'Dog-Duck');
-new BusCatalogImage('./images/dragon.jpg', 'Dragon');
-new BusCatalogImage('./images/pen.jpg', 'Pen');
-new BusCatalogImage('./images/scissors.jpg', 'Scissors');
-new BusCatalogImage('./images/shark.jpg', 'Shark');
-new BusCatalogImage('./images/sweep.png', 'Sweep');
-new BusCatalogImage('./images/tauntaun.jpg', 'TaunTaun');
-new BusCatalogImage('./images/unicorn.jpg', 'Unicorn');
-new BusCatalogImage('./images/usb.gif', 'Usb');
-new BusCatalogImage('./images/water-can.jpg', 'Water-Can');
+
+// new GoatImage('./images/sassy-goat.jpg', 'Sass Goat');
+// new GoatImage('./images/smiling-goat.jpg', 'Smile Goat');
+// new GoatImage('./images/sweater-goat.jpg', 'Sweet Goat');
+
+// When I first load the page, I need to know which goat is left and right, sso they can track their clicks in the javascript
 
 
 leftImageThatIsOnThePage= allImages[2];

@@ -34,13 +34,13 @@ Stretch: start with random image
 var likeCounter = 0;
 var allImages = [];
 var leftImageThatIsOnThePage;
-var centerImageThatIsOnThePage;
+var middleImageThatIsOnThePage;
 var rightImageThatIsOnThePage;
 var previouslyPickedImages=[];
 
 // references to the DOM (html) document object model
 var leftImage = document.getElementById('left-image');
-var centerImage = document.getElementById('center-image');
+var middleImage = document.getElementById('middle-image');
 var rightImage = document.getElementById('right-image');
 
 //Intialize the page
@@ -67,7 +67,7 @@ var BusCatalogImage = function(src, name){
 // Other functions
 //=================================================================
 //    randomly select an image(three images)
-//    - random number generator - to pick the goat
+//    - random number generator - to pick the image
 //    - change the DOM
 //    - Store the index of the last image we put on the page
 
@@ -82,7 +82,7 @@ function handleClickOnAnyImage(event){
     leftImageThatIsOnThePage.clicks++;
   }
   if(event.target.id === 'center_product_img'){
-    centerImageThatIsOnThePage.clicks++;
+    middleImageThatIsOnThePage.clicks++;
   }
   if(event.target.id === 'right_product_img'){
     rightImageThatIsOnThePage.clicks++;
@@ -102,14 +102,14 @@ function handleClickOnAnyImage(event){
   tempPickedProducts.push(allImages[leftImageIndex]);
   do {// we are selecting a previous image
     // pick a new 3 images,
-    var centerImageIndex = Math.floor(Math.random() * allImages.length);
+    var middleImageIndex = Math.floor(Math.random() * allImages.length);
 
   } while (
-    previouslyPickedImages.includes(allImages[centerImageIndex]) ||
-    tempPickedProducts.includes(allImages[centerImageIndex])
+    previouslyPickedImages.includes(allImages[middleImageIndex]) ||
+    tempPickedProducts.includes(allImages[middleImageIndex])
 
   );
-  tempPickedProducts.push(allImages[centerImageIndex]);
+  tempPickedProducts.push(allImages[middleImageIndex]);
 
   do {
 
@@ -128,12 +128,12 @@ function handleClickOnAnyImage(event){
 
 
   leftImageThatIsOnThePage = allImages[leftImageIndex];
-  centerImageThatIsOnThePage = allImages[centerImageIndex];
+  middleImageThatIsOnThePage = allImages[middleImageIndex];
   rightImageThatIsOnThePage = allImages[rightImageIndex];
 
   // and put them on the page
   leftImage.src = leftImageThatIsOnThePage.imagesrc;
-  centerImage.src = centerImageThatIsOnThePage.imagesrc;
+  middleImage.src = middleImageThatIsOnThePage.imagesrc;
   rightImage.src = rightImageThatIsOnThePage.imagesrc;
 
 
@@ -172,7 +172,7 @@ new BusCatalogImage('./images/water-can.jpg', 'Water-Can');
 
 
 leftImageThatIsOnThePage= allImages[2];
-centerImageThatIsOnThePage=allImages[1];
+middleImageThatIsOnThePage=allImages[1];
 rightImageThatIsOnThePage=allImages[0];
 
 //================================================================

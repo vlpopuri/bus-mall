@@ -209,48 +209,73 @@ function makeAProductChart(){
 
   var productNamesArray = [];
   var productLikesArray =[];
+  var productLikesPercentArray=[];
+  var singleproductlikepercent;
 
+
+  var totalclicks=0;
+  for (var z=0;z<allImages.length;z++)
+  {
+    totalclicks=totalclicks+allImages[z].clicks;
+
+  }
 
   for(var i = 0; i < allImages.length; i++){
     var singleProductName = allImages[i].name;
     productNamesArray.push(singleProductName);
   }
   //debugger;
+
   for(var j = 0; j < allImages.length; j++){
     var singleProductLikes = allImages[j].clicks;
     productLikesArray.push(singleProductLikes);
+
   }
+  for (var k=0; k< allImages.length; k++)
+  {
+    singleproductlikepercent=Math.floor((allImages[k].clicks/totalclicks).toFixed((2))*100);
+    productLikesPercentArray.push(singleproductlikepercent);
 
-
+  }
   var ctx = document.getElementById('BusCatalogChart').getContext('2d');
 
   var productChart = new Chart(ctx, {
   // The type of chart we want to create
     type: 'bar',
-
-    // The data for our dataset
+    //The data for our dataset
     data: {
       labels: productNamesArray,
-      datasets: [{
-        label: 'Product Likes',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: productLikesArray,
-      }]
-    },
+      datasets: [
+        {
 
-    // Configuration options go here
+          data: productLikesArray,
+          label: 'Likes',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgb(255, 99, 132)'
+        },
+        {
+          data: productLikesPercentArray,
+          label: 'Likes percent',
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(192, 75, 192, 0.5)'
+        }
+      ]
+    },
     options: {
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero:true,
+            responsive: false,
+            maintainAspectRatio: true
           }
         }]
       }
     }
   });
+
 }
+
 makeAProductChart();
 
 
